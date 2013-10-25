@@ -34,12 +34,12 @@ import com.singularity.ee.agent.systemagent.api.TaskOutput;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import com.singularity.ee.agent.systemagent.monitors.common.JavaServersMonitor;
 
-public class MysqlMonitor extends JavaServersMonitor
+public class MySQLMonitor extends JavaServersMonitor
 {
 	Connection conn = null;
 	private volatile String tierName;
 	
-	public MysqlMonitor()
+	public MySQLMonitor()
 	{
 		oldValueMap = Collections.synchronizedMap(new HashMap<String, String>());
 	}
