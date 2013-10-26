@@ -1,6 +1,8 @@
 mysql-monitoring-extension
 ==========================
 
+This extension works only with the Java agent.
+
 ##Use Case
 
 MySQL is an open source relational database management system.
