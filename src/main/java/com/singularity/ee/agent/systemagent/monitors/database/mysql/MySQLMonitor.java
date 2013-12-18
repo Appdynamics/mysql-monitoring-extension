@@ -161,6 +161,9 @@ public class MySQLMonitor extends JavaServersMonitor
 		printMetric("Resource Utilization|Total Cached Threads", getString("Threads_cached"),
 				MetricWriter.METRIC_AGGREGATION_TYPE_OBSERVATION, MetricWriter.METRIC_TIME_ROLLUP_TYPE_CURRENT,
 				MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE);
+        printMetric("Resource Utilization|Total Connected Threads", getString("Threads_connected"),
+                MetricWriter.METRIC_AGGREGATION_TYPE_OBSERVATION, MetricWriter.METRIC_TIME_ROLLUP_TYPE_CURRENT,
+                MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE);
 		/*
 		 * printMetric("Resource Utilization|Transactions|In Progress",
 		 * getString(getDiffValue("Com_begin") - (getDiffValue("Com_rollback") +
