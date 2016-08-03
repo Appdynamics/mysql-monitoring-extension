@@ -45,14 +45,13 @@ public class MySQLMonitor extends AManagedMonitor {
     private MonitorConfiguration configuration;
 
     public MySQLMonitor() {
-        System.out.println(logVersion());
+        System.out.println(logMessage());
+        logger.info(logMessage());
         cachedStats = new HashMap<String, Map<String, String>>();
     }
 
-    private String logVersion() {
-        String msg = "Using Monitor Version [" + getImplementationVersion() + "]";
-        logger.info(msg);
-        return msg;
+    private String logMessage() {
+        return "Using Monitor Version [" + getImplementationVersion() + "]";
     }
 
     private static String getImplementationVersion() {
@@ -62,7 +61,7 @@ public class MySQLMonitor extends AManagedMonitor {
 
     public TaskOutput execute(Map<String, String> args, TaskExecutionContext taskExecutionContext) throws TaskExecutionException {
 
-        System.out.println(logVersion());
+        logger.info(logMessage());
         logger.info("Starting the MySQL Monitoring task.");
 
         Thread thread = Thread.currentThread();
