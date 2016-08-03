@@ -1,0 +1,32 @@
+mySQL:
+    - name: "Local MySQL"
+      host: "localhost"
+      port: 3388
+      user: "root"
+      #Provide password or passwordEncrypted and encryptionKey
+      password: "root"
+
+      passwordEncrypted:
+      encryptionKey:
+
+      #Slave machines
+      slave:
+         - name: "Local Slave"
+           host: "localhost"
+           port: 3388
+           user: "root"
+           #Provide password or passwordEncrypted and encryptionKey
+           password:
+
+           passwordEncrypted: "IGVtC9eudmgG8RDjmRjGPQ=="
+           encryptionKey: "welcome"
+
+
+#timeout for the metric collector thread
+threadTimeout: 30
+
+# number of concurrent tasks
+numberOfThreads: 5
+
+#prefix used to show up metrics in AppDynamics
+metricPrefix:  "Custom Metrics|MySQL|"
