@@ -158,7 +158,7 @@ Replication stats will be available when "slave"'s are configured in the config.
 |SQL Delay|
 
 ## Custom Dashboard ##
-![]()
+![](https://github.com/Appdynamics/mysql-monitoring-extension/blob/master/MySQL.png)
 
 ## Troubleshooting ##
 
