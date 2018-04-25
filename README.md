@@ -14,7 +14,7 @@ This extension monitors the MySQL server. This extension should be used with sta
 
 ## Configuration ##
 
-###Note
+### Note
 Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
 
 1. Configure the MySQL servers by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor`.
@@ -69,8 +69,9 @@ Below is the sample
 
     On Windows, please specify the absolute path to the config.yml.
 
-##Password Encryption Support
-To avoid setting the clear text password in the config.yml, please follow the process below to encrypt the password
+## Password Encryption Support ##
+
+To avoid setting the clear text password in the config.yml, please follow the process below to encrypt the password. This process requires the Oracle Java class sun/misc/BASE64Encode which is not present in all Java implementations. You may need to download a suitable Java runtime from [www.java.com](https://www.java.com/).
 
 1. Download the util jar to encrypt the password from [https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar](https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar) and navigate to the downloaded directory
 2. Encrypt password from the commandline
@@ -81,7 +82,7 @@ To avoid setting the clear text password in the config.yml, please follow the pr
 
 In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 
-###Activity
+### Activity
 
 |Metric Name            	|
 |------------------------------	      |
@@ -108,7 +109,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Transactions/Committed|
 |Sort Total|
 
-###Efficiency
+### Efficiency
 
 |Metric Name            	|
 |------------------------------	      |
@@ -129,7 +130,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Binary Log/% Transactions too Big|
 |Tables/Temp/% Created on Disk|
 
-###Resource Utilization
+### Resource Utilization
 
 |Metric Name            	|
 |------------------------------	      |
@@ -148,7 +149,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Aborted Connections|
 |Aborted Clients|
 
-###Replication
+### Replication
 
 Replication stats will be available when "slave"'s are configured in the config.yml
 
