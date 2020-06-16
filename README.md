@@ -189,8 +189,13 @@ Find out more in the [AppDynamics Exchange][].
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence][].
 
-**Version:** 2.0.0
-**Controller Compatibility:** 3.7+
+## Version
+|          Name            |  Version   |
+|--------------------------|------------|
+|Extension Version         |2.1.0       |
+|Controller Compatibility  |4.5 or Later|
+|Machine Agent Version     |4.5.13+     |
+|Last Update               |06/14/2020  |
 
 
 [Github]: https://github.com/Appdynamics/mysql-monitoring-extension

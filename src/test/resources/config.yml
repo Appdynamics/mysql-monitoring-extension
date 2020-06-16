@@ -1,9 +1,9 @@
 #This will create this metric in all the tiers, under this path
-#metricPrefix: "Custom Metrics|MySQL|"
+metricPrefix: "Custom Metrics|MySQL|"
 
 #This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
 #To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
-metricPrefix: "Server|Component:<TIER ID>|Custom Metrics|MySQL|"
+#metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|MySQL|"
 
 mySQL:
     - name: "Local MySQL"
@@ -19,7 +19,7 @@ mySQL:
       #Slave machines
       #slave:
       #   - name: "Local Slave"
-      #     host: "localhost"
+      #     host: "local"
       #     port: 3388
       #     user: ""
            #Provide password or passwordEncrypted and encryptionKey
@@ -27,7 +27,6 @@ mySQL:
 
            #passwordEncrypted: ""
            #encryptionKey: ""
-
 
 # number of concurrent tasks
 numberOfThreads: 5
