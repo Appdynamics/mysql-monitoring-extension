@@ -5,6 +5,7 @@ import com.appdynamics.extensions.MetricWriteHelper;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
 import com.appdynamics.extensions.metrics.Metric;
+import com.appdynamics.extensions.mysql.Utility.Constants;
 import com.appdynamics.extensions.mysql.config.Stat;
 import com.appdynamics.extensions.util.CryptoUtils;
 import com.google.common.base.Strings;
@@ -39,14 +40,12 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         this.configuration=configuration;
         this.metricWriteHelper=metricWriteHelper;
         this.mysqlServer=mysqlServer;
-        this.metricPrefix=configuration.getMetricPrefix()+SEPARATOR+this.mysqlServer.get("name")+SEPARATOR;
+        this.metricPrefix=configuration.getMetricPrefix()+SEPARATOR+this.mysqlServer.get(Constants.DISPLAY_NAME)+SEPARATOR;
         this.cachedStats=cachedStats;
     }
 
     @Override
-    public void onTaskComplete() {
-        logger.info("Completed Mysql Monitor task for "+mysqlServer.get("name"));
-    }
+    public void onTaskComplete() { logger.info("Completed Mysql Monitor task for "+mysqlServer.get(Constants.DISPLAY_NAME)); }
 
     @Override
     public void run() {
@@ -54,13 +53,13 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         Stat.Stats stats = (Stat.Stats) configuration.getMetricsXml();
         List<Metric> metricListfiltered=Lists.newArrayList();
         metricCollector = getMetricCollector(stats.getStat(),metricPrefix);
-        String name = (String) mysqlServer.get("name");
-        String host = (String)mysqlServer.get("host");
-        int port = (Integer) mysqlServer.get("port");
+        String name = (String) mysqlServer.get(Constants.DISPLAY_NAME);
+        String host = (String)mysqlServer.get(Constants.HOST);
+        int port = (Integer) mysqlServer.get(Constants.PORT);
         try {
             Map<String,String> currstats=populate(new String[]{"show global variables","show global status"});
 
-            List<Map> slaves = (List<Map>) mysqlServer.get("slave");
+            List<Map> slaves = (List<Map>) mysqlServer.get(Constants.SLAVES);
 
             if (slaves != null && slaves.size()>0){
                 logger.debug("Collecting replication metrics");
@@ -79,7 +78,7 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         } catch (TaskExecutionException e) {
             logger.error("Error while collecting metrics from ["+name+"]");
         }finally{
-            metricListfiltered.add(new Metric("Heartbeat",serverHeartbeat.toString(),metricPrefix+"Heartbeat"));
+            metricListfiltered.add(new Metric(Constants.HEARTBEAT,serverHeartbeat.toString(),metricPrefix+Constants.HEARTBEAT));
             metricWriteHelper.transformAndPrintMetrics(metricListfiltered);
         }
     }
@@ -90,15 +89,15 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         Statement stmt=null;
 
         Map<String,String> statsMap=Maps.newHashMap();
-        String name = (String)mysqlServer.get("name");
+        String name = (String)mysqlServer.get(Constants.DISPLAY_NAME);
 
         try {
-            String host = (String)mysqlServer.get("host");
-            int port = (Integer) mysqlServer.get("port");
-            String user = (String)mysqlServer.get("user");
-            String password = (String)mysqlServer.get("password");
-            String passwordEncrypted = (String)mysqlServer.get("passwordEncrypted");
-            String encryptionKey = (String)mysqlServer.get("encryptionKey");
+            String host = (String)mysqlServer.get(Constants.HOST);
+            int port = (Integer) mysqlServer.get(Constants.PORT);
+            String user = (String)mysqlServer.get(Constants.USERNAME);
+            String password = (String)mysqlServer.get(Constants.PASSWORD);
+            String passwordEncrypted = (String)mysqlServer.get(Constants.PASSWORD_ENCRYPTED);
+            String encryptionKey = (String)mysqlServer.get(Constants.ENCRYPTION_KEY);
 
             String plainPassword = getPassword(password,passwordEncrypted,encryptionKey);
 
@@ -152,22 +151,21 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         Map<String,String> slaveMetricMap = Maps.newHashMap();
         List<Metric> replicationStatsList = Lists.newArrayList();
 
-        List<Map> slaves = (List<Map>) mysqlServer.get("slave");
-
+        List<Map> slaves = (List<Map>) mysqlServer.get(Constants.SLAVES);
+        String encryptionKey = (String)mysqlServer.get(Constants.ENCRYPTION_KEY);
         for(Map slave: slaves){
             BigInteger slaveHeartbeat = BigInteger.ZERO;
             Connection conn = null;
             Statement stmt = null;
-            String name = (String) slave.get("name");
+            String name = (String) slave.get(Constants.DISPLAY_NAME);
 
             try{
-                String host = (String) slave.get("host");
-                int port = (Integer) slave.get("port");
-                String user = (String) slave.get("user");
+                String host = (String) slave.get(Constants.HOST);
+                int port = (Integer) slave.get(Constants.PORT);
+                String user = (String) slave.get(Constants.USERNAME);
 
-                String password = (String)slave.get("password");
-                String passwordEncrypted = (String)slave.get("passwordEncrypted");
-                String encryptionKey = (String)slave.get("encryptionKey");
+                String password = (String)slave.get(Constants.PASSWORD);
+                String passwordEncrypted = (String)slave.get(Constants.PASSWORD_ENCRYPTED);
 
                 String plainPassword = getPassword(password,passwordEncrypted,encryptionKey);
 
@@ -207,7 +205,7 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
             } finally{
                 closeStatement(stmt);
                 closeConnection(conn);
-                replicationStatsList.add(new Metric("HeartBeat",slaveHeartbeat.toString(),metricPrefix+"Replication" + SEPARATOR + name + SEPARATOR + "HeartBeat"));
+                replicationStatsList.add(new Metric(Constants.HEARTBEAT,slaveHeartbeat.toString(),metricPrefix+"Replication" + SEPARATOR + name + SEPARATOR + Constants.HEARTBEAT));
             }
         }
         return replicationStatsList;
@@ -219,9 +217,10 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
         }
         if (!Strings.isNullOrEmpty(passwordEncrypted)){
             Map<String,String> cryptoMap = Maps.newHashMap();
-            cryptoMap.put("passwordEncrypted",passwordEncrypted);
-            cryptoMap.put("encryptionKey",encryptionKey);
+            cryptoMap.put(Constants.PASSWORD_ENCRYPTED,passwordEncrypted);
+            cryptoMap.put(Constants.ENCRYPTION_KEY,encryptionKey);
             logger.debug("Decrypting the encrypted password....");
+
             return CryptoUtils.getPassword(cryptoMap);
         }
 

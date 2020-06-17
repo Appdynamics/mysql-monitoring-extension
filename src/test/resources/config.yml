@@ -13,8 +13,7 @@ mySQL:
       #Provide password or passwordEncrypted and encryptionKey
       password: ""
 
-      passwordEncrypted: ""
-      encryptionKey: ""
+      encryptedPassword: ""
 
       #Slave machines
       #slave:
@@ -25,8 +24,7 @@ mySQL:
            #Provide password or passwordEncrypted and encryptionKey
       #     password: ""
 
-           #passwordEncrypted: ""
-           #encryptionKey: ""
+           #encryptedPassword: ""
 
 # number of concurrent tasks
 numberOfThreads: 5
@@ -52,7 +50,7 @@ controllerInfo:
   tierName: "" # -Dappdynamics.agent.tierName
   nodeName: "" # -Dappdynamics.agent.nodeName
 
-#Encryption key for your controllerInfo password
+
 encryptionKey: "abcd"
 
 enableHealthChecks: false

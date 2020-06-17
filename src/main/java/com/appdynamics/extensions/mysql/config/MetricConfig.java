@@ -29,6 +29,9 @@ public class MetricConfig {
     @XmlAttribute
     private String multiplier;
 
+    @XmlAttribute
+    private String delta;
+
     @XmlElement(name="convert")
     private MetricConverter[] convert;
 
@@ -78,6 +81,14 @@ public class MetricConfig {
 
     public void setMultiplier(String multiplier) {
         this.multiplier = multiplier;
+    }
+
+    public String getDelta() {
+        return delta;
+    }
+
+    public void setDelta(String delta) {
+        this.delta = delta;
     }
 
     public Map<String,String> getConvert() {

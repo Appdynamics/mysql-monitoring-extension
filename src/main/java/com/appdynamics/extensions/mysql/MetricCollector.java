@@ -16,6 +16,10 @@ import java.util.Map;
 
 import static com.appdynamics.extensions.mysql.Utility.Constants.SEPARATOR;
 
+/**
+ * Created by abhishek.saxena on 17/06/20.
+ */
+
 public class MetricCollector {
 
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(MetricCollector.class);
@@ -24,6 +28,7 @@ public class MetricCollector {
     private String metricPrefix;
 
     private static ObjectMapper objectMapper = new ObjectMapper();
+
 
 
     public MetricCollector(Stat[] stat,String metricPrefix){

@@ -129,7 +129,7 @@ public class MySQLMonitorTaskTest {
         resultList.add("Efficiency|Binary Log|% Transactions too Big");
         resultList.add("Efficiency|Tables|Temp|% Created on Disk");
         resultList.add("Efficiency|InnoDB|Cache|Buffer Pool|% Writes Waited");
-        resultList.add("Heartbeat");
+        resultList.add("HeartBeat");
 
         for(Metric metric: (List<Metric>)pathCaptor.getValue()){
             Assert.assertTrue(resultList.contains(metric.getMetricName()));

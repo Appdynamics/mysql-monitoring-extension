@@ -4,6 +4,7 @@ import com.appdynamics.extensions.ABaseMonitor;
 import com.appdynamics.extensions.TasksExecutionServiceProvider;
 import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
+import com.appdynamics.extensions.mysql.Utility.Constants;
 import com.appdynamics.extensions.mysql.config.Stat;
 import com.appdynamics.extensions.util.AssertUtils;
 import com.google.common.collect.Maps;
@@ -12,26 +13,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.appdynamics.extensions.mysql.Utility.Constants.DEFAULT_METRIC_PREFIX;
 
 public class MySQLMonitor extends ABaseMonitor {
 
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(MySQLMonitor.class);
 
-    private static final String METRIC_PREFIX = DEFAULT_METRIC_PREFIX;
+    private static final String METRIC_PREFIX = Constants.DEFAULT_METRIC_PREFIX;
     private Map<String,?> configYml = Maps.newHashMap();
     private MonitorContextConfiguration monitorContextConfiguration;
     private Map<String, Map<String,String>> cachedStats;
 
     @Override
-    protected String getDefaultMetricPrefix() {
-        return METRIC_PREFIX;
-    }
+    protected String getDefaultMetricPrefix() { return Constants.DEFAULT_METRIC_PREFIX; }
 
     @Override
-    public String getMonitorName() {
-        return "Mysql Monitor";
-    }
+    public String getMonitorName() { return Constants.MONITOR_NAME; }
 
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
@@ -46,14 +42,15 @@ public class MySQLMonitor extends ABaseMonitor {
     @Override
     protected void doRun(TasksExecutionServiceProvider tasksExecutionServiceProvider) {
 
-        List<Map<String,?>> mysqlServers =  (List<Map<String,?>>)configYml.get("mySQL");
+        List<Map<String,?>> mysqlServers =  (List<Map<String,?>>)configYml.get(Constants.MYSQLSERVER);
 
-        for (Map<String,?> mysqlserver: mysqlServers){
-            AssertUtils.assertNotNull(mysqlserver,"The server arguments cannot be empty ");
-            AssertUtils.assertNotNull(mysqlserver.get("name"),"The name cannot be null");
-            logger.info("Starting monitoring task for server "+mysqlserver.get("name"));
-            MySQLMonitorTask task = new MySQLMonitorTask(tasksExecutionServiceProvider.getMetricWriteHelper(), monitorContextConfiguration,mysqlserver,cachedStats);
-            tasksExecutionServiceProvider.submit((String)mysqlserver.get("name"),task);
+        for (Map mysqlServer: mysqlServers){
+            AssertUtils.assertNotNull(mysqlServer,"The server arguments cannot be empty ");
+            AssertUtils.assertNotNull(mysqlServer.get("name"),"The name cannot be null");
+            mysqlServer.put(Constants.ENCRYPTION_KEY,configYml.get(Constants.ENCRYPTION_KEY));
+            logger.info("Starting monitoring task for server "+mysqlServer.get("name"));
+            MySQLMonitorTask task = new MySQLMonitorTask(tasksExecutionServiceProvider.getMetricWriteHelper(), monitorContextConfiguration,mysqlServer,cachedStats);
+            tasksExecutionServiceProvider.submit((String)mysqlServer.get("name"),task);
         }
     }
 
