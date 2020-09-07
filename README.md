@@ -156,6 +156,7 @@ Replication stats will be available when "slave"'s are configured in the config.
 |------------------------------	      |
 |Slave IO Running|
 |SQL Delay|
+|Seconds Behind Master|
 
 ## Custom Dashboard ##
 ![](https://github.com/Appdynamics/mysql-monitoring-extension/blob/master/MySQL.png)
