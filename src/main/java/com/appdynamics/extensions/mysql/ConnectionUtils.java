@@ -38,7 +38,7 @@ public class ConnectionUtils {
         Connection conn=null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(connStr);
         }catch(ClassNotFoundException e){
             logger.error("Unable to load Driver Class",e);
