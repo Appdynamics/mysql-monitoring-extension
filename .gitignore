@@ -2,7 +2,7 @@
 *.iml
 .classpath
 .project
-.idea
+.idea/
 dist
 target
 

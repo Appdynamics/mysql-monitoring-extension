@@ -31,7 +31,6 @@ public class MySQLMonitor extends ABaseMonitor {
 
     @Override
     protected void initializeMoreStuff(Map<String, String> args) {
-        //super.initializeMoreStuff(args);
         monitorContextConfiguration = getContextConfiguration();
         configYml = monitorContextConfiguration.getConfigYml();
         AssertUtils.assertNotNull(configYml,"The config.yml is not available");

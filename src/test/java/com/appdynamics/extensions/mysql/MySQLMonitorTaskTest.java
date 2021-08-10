@@ -6,7 +6,6 @@ import com.appdynamics.extensions.conf.MonitorContextConfiguration;
 import com.appdynamics.extensions.metrics.Metric;
 import com.appdynamics.extensions.mysql.config.Stat;
 import com.google.common.collect.Lists;
-import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +54,7 @@ public class MySQLMonitorTaskTest {
     }
 
     @Test
-    public void testRunFunctionality() throws SQLException, TaskExecutionException {
+    public void testRunFunctionality() {
 
         List<String> resultList = Lists.newArrayList();
 

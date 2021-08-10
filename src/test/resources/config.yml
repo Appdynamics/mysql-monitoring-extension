@@ -1,9 +1,9 @@
-#This will create this metric in all the tiers, under this path
+#Metric prefix used when SIM is enabled for your machine agent
 metricPrefix: "Custom Metrics|MySQL|"
 
-#This will create it in specific Tier/Component. Make sure to replace <COMPONENT_ID> with the appropriate one from your environment.
-#To find the <COMPONENT_ID> in your environment, please follow the screenshot https://docs.appdynamics.com/display/PRO42/Build+a+Monitoring+Extension+Using+Java
-#metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|MySQL|"
+#This will publish metrics to specific tier
+#Instructions on how to retrieve the Component ID can be found in the Metric Prefix section of https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695
+#metricPrefix: "Server|Component:<TIER ID>|Custom Metrics|MySQL|"
 
 mySQL:
     - name: "Local MySQL"
@@ -52,5 +52,3 @@ controllerInfo:
 
 
 encryptionKey: "abcd"
-
-enableHealthChecks: false

@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class ConnectionUtils {
     private static final Logger logger = ExtensionsLoggerFactory.getLogger(ConnectionUtils.class);
 
-    protected static Connection connect(String host, int port, String user, String plainPassword) throws TaskExecutionException {
+    protected static Connection connect(String host, int port, String user, String plainPassword){
 
         String connStr = "jdbc:mysql://" + host + ":" + port;
         connStr+="/information_schema?";
@@ -42,10 +42,8 @@ public class ConnectionUtils {
             conn = DriverManager.getConnection(connStr);
         }catch(ClassNotFoundException e){
             logger.error("Unable to load Driver Class",e);
-            throw new TaskExecutionException("Unable to load Driver Class",e);
         } catch (SQLException e){
             logger.error("Unable to create connection",e);
-            throw new TaskExecutionException("Unable to create connection",e);
         }
 
         return conn;

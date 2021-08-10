@@ -1,87 +1,101 @@
 AppDynamics MySQL Monitoring Extension
 ====================================
 
-## Introduction ##
-
+## Use Case
 This extension monitors the MySQL server. This extension should be used with standalone Java Machine Agents.
 
+## Prerequisites
 
-## Installation ##
+1. Before the extension is installed, the prerequisites mentioned [here](https://community.appdynamics.com/t5/Knowledge-Base/Extensions-Prerequisites-Guide/ta-p/35213) need to be met. Please do not proceed with the extension installation if the specified prerequisites are not met
+2. The extension needs to be able to connect to MySQL server in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
-1. To build from the source, run "mvn clean install" and find the MySQLMonitor.zip file in the "target" folder.
-   You can also download the MySQLMonitor.zip from [AppDynamics Exchange][].
-2. Unzip as "MySQLMonitor" and copy the "MySQLMonitor" directory to `<MACHINE_AGENT_HOME>/monitors`.
+## Installation
 
-## Configuration ##
+1. Run "mvn clean install"
+2. Unzip the contents of MySQLMonitor-\<version\>.zip file (&lt;MySQLRepo&gt; / targets) and copy the directory to `<your-machine-agent-dir>/monitors`.
+3. Edit config.yml file and provide the required configuration (see Configuration section)
+4. Restart the Machine Agent.
 
-###Note
+Please place the extension in the **"monitors"** directory of your **Machine Agent** installation directory. Do not place the extension in the **"extensions"** directory of your **Machine Agent** installation directory.
+
+## Configuration
+
+### Config.yml
 Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
 
-1. Configure the MySQL servers by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor`.
+#### Configure metric prefix
+Please follow section 2.1 of the [Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to set up metric prefix.
+```
+#Metric prefix used when SIM is enabled for your machine agent
+#metricPrefix: "Custom Metrics|MySQL|"
 
-     ```
-      mySQL:
-          - name: "Local MySQL"
-            host: "localhost"
-            port: 3388
-            user: "root"
-            #Provide password or passwordEncrypted and encryptionKey
-            password: "root"
+#This will publish metrics to specific tier
+#Instructions on how to retrieve the Component ID can be found in the Metric Prefix section of https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695
+metricPrefix: "Server|Component:<TIER ID>|Custom Metrics|MySQL|"
+```
 
-            passwordEncrypted:
-            encryptionKey:
+#### MySQL server configuration
+Configure the MySQL servers by editing the config.yml file in `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor`.
+```
+mySQL:
+   - name: "Local MySQL"
+     host: "localhost"
+     port: 3306
+     user: "root"
+     password: "root"
 
-            #Slave machines
-            slave:
-               - name: "Local Slave"
-                 host: "192.168.0.108"
-                 port: 3306
-                 user: "root"
-                 #Provide password or passwordEncrypted and encryptionKey
-                 password:
+     #Provide password or passwordEncrypted and encryptionKey
+     #encryptedPassword:
 
-                 passwordEncrypted: "IGVtC9eudmgG8RDjmRjGPQ=="
-                 encryptionKey: "welcome"
+     #Slave machines
+     slave:
+        - name: "Local Slave"
+          host: "192.168.0.108"
+          port: 3388
+          user: "root"
+          #password:
+           
+          #Provide password or passwordEncrypted and encryptionKey
+          encryptedPassword: "IGVtC9eudmgG8RDjmRjGPQ=="
+          
+          
+          
+encryptionKey: "welcome"
+```
+- name: Display name for your mysql server which will be displayed in metric path. It should be unique for all servers
+- host: Mysql server host
+- port: Mysql server host
+- user: User which is used to connect to mysql server
+- password: Password to connect to mysql server. Provide either password or encryptedPassword and encryptionKey. Refer Credentials encryption section for more details.
+- slave: Slave configurations to fetch slave metrics
 
+#### Number of threads
+Always include 1 thread per server + 1 to run main task.
 
-      #timeout for the metric collector thread
-      threadTimeout: 30
+#### Yml Validation
+Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
 
-      # number of concurrent tasks
-      numberOfThreads: 5
-
-      #prefix used to show up metrics in AppDynamics
-      metricPrefix:  "Custom Metrics|MySQL|"
-    ```
-
-
-2. Configure the path to the config.yaml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor/` directory.
+#### monitor.xml
+Configure the path to the config.yml and metrics.xml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor/` directory.
 Below is the sample
+```
+<task-arguments>
+   <!-- config file-->
+   <argument name="config-file" is-required="true" default-value="monitors/MySQLMonitor/config.yml" />
+   <argument name="metric-file" is-required="true" default-value="monitors/MySQLMonitor/metrics.xml" />
+</task-arguments>
+```
+On Windows, please specify the absolute path to the config.yml.
 
-    ```
+Provide path to connector jar in classpath
+```
+<classpath>mysql-monitoring-extension.jar;/path/to/your/connector.jar</classpath>
+```
 
-         <task-arguments>
-            <!-- config file-->
-            <argument name="config-file" is-required="true" default-value="monitors/MySQLMonitor/config.yml" />
-         </task-arguments>
+### Metrics.xml
+You can modify metrics of your choice by modifying the provided metrics.xml file. Please look at how the metrics have been defined and follow the same convention when modifying any metrics. You do have the ability to also select your Rollup types for each metric as well as set an alias name that you would like to display on the metric browser.
 
-    ```
-
-    On Windows, please specify the absolute path to the config.yml.
-
-##Password Encryption Support
-To avoid setting the clear text password in the config.yml, please follow the process below to encrypt the password
-
-1. Download the util jar to encrypt the password from [https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar](https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar) and navigate to the downloaded directory
-2. Encrypt password from the commandline
-`java -cp appd-exts-commons-1.1.2.jar com.appdynamics.extensions.crypto.Encryptor encryptionKey myPassword`
-3. Specify the passwordEncrypted and encryptionKey in config.yml
-
-## Metrics
-
-In metric browser metrics will be displayed in [Custom Metrics|MySQL|
-
-###Activity
+#### Activity
 
 |Metric Name            	|
 |------------------------------	      |
@@ -108,7 +122,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Transactions/Committed|
 |Sort Total|
 
-###Efficiency
+#### Efficiency
 
 |Metric Name            	|
 |------------------------------	      |
@@ -129,7 +143,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Binary Log/% Transactions too Big|
 |Tables/Temp/% Created on Disk|
 
-###Resource Utilization
+#### Resource Utilization
 
 |Metric Name            	|
 |------------------------------	      |
@@ -148,7 +162,7 @@ In metric browser metrics will be displayed in [Custom Metrics|MySQL|
 |Aborted Connections|
 |Aborted Clients|
 
-###Replication
+#### Replication
 
 Replication stats will be available when "slave"'s are configured in the config.yml
 
@@ -157,37 +171,34 @@ Replication stats will be available when "slave"'s are configured in the config.
 |Slave IO Running|
 |SQL Delay|
 
-## Custom Dashboard ##
-![](https://github.com/Appdynamics/mysql-monitoring-extension/blob/master/MySQL.png)
+## Extensions Workbench
+Workbench is an inbuilt feature provided with each extension in order to assist you to fine tune the extension setup before you actually deploy it on the controller. Please review the following document on [How to use the Extensions WorkBench](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-use-the-Extensions-WorkBench/ta-p/30130).
 
-## Troubleshooting ##
+## Credentials Encryption
+Please visit [Encryption Guidelines](https://community.appdynamics.com/t5/Knowledge-Base/How-to-use-Password-Encryption-with-Extensions/ta-p/29397) to get detailed instructions on password encryption. The steps in this document will guide you through the whole process.
 
-1. Verify Machine Agent Data: Please start the Machine Agent without the extension and make sure that it reports data.
-   Verify that the machine agent status is UP and it is reporting Hardware Metrics.
+## Troubleshooting
+Please follow the steps listed in this [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) in order to troubleshoot your issue. These are a set of common issues that customers might have faced during the installation of the extension. If these don't solve your issue, please follow the last step on the [troubleshooting-document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to contact the support team.
 
-2. config.yml:Validate the file here. http://www.yamllint.com/
+## Support Tickets
 
-3. The config cannot be null :
-   This usually happens when on a windows machine in monitor.xml you give config.yaml file path with linux file path separator `/`.
-   Use Windows file path separator `\` e.g. `monitors\MySQLMonitor\config.yaml`. On Windows, please specify absolute file path.
+If after going through the [Troubleshooting Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) you have not been able to get your extension working, please file a ticket with the following information:
 
-4. Metric Limit: Please start the machine agent with the argument -Dappdynamics.agent.maxMetrics=5000 if there is a metric limit reached
-   error in the logs. If you don't see the expected metrics, this could be the cause.
+1. Stop the running machine agent .
+2. Delete all existing logs under <MachineAgent>/logs .
+3. Please enable debug logging by editing the file <MachineAgent>/conf/logging/log4j.xml. Change the level value of the following <logger> elements to debug.
+    ```
+    <logger name="com.singularity">
+    <logger name="com.appdynamics">
+   ```
+4. Start the machine agent and please let it run for 10 mins. Then zip and upload all the logs in the directory <MachineAgent>/logs/*.
+   Attach the zipped <MachineAgent>/conf/* directory.
+5. Attach the zipped <MachineAgent>/monitors/ExtensionFolderYouAreHavingIssuesWith directory .
 
-5. Debug Logs:Edit the file, /conf/logging/log4j.xml and update the level of the appender com.appdynamics to debug .
-   Let it run for 5-10 minutes and attach the logs to a support ticket
+For any support related questions, you can also contact help@appdynamics.com.
 
-## Contributing ##
-
-Always feel free to fork and contribute any changes directly via [GitHub][].
-
-## Community ##
-
-Find out more in the [AppDynamics Exchange][].
-
-## Support ##
-
-For any questions or feature request, please contact [AppDynamics Center of Excellence][].
+## Contributing
+Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/mysql-monitoring-extension).
 
 ## Version
 |          Name            |  Version   |
@@ -195,10 +206,6 @@ For any questions or feature request, please contact [AppDynamics Center of Exce
 |Extension Version         |2.1.0       |
 |Controller Compatibility  |4.5 or Later|
 |Machine Agent Version     |4.5.13+     |
-|Last Update               |06/14/2020  |
-
-
-[Github]: https://github.com/Appdynamics/mysql-monitoring-extension
-[AppDynamics Exchange]: https://www.appdynamics.com/community/exchange/extension/mysql-database-monitoring-extension/
-[AppDynamics Center of Excellence]: mailto:help@appdynamics.com
+|Product Tested On         |8.0.25      |
+|Last Update               |10/08/2021  |
 
