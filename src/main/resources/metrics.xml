@@ -1,0 +1,80 @@
+<!--
+  ~ Copyright 2020. AppDynamics LLC and its affiliates.
+  ~ All Rights Reserved.
+  ~ This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~ The copyright notice above does not evidence any actual or intended publication of such source code.
+  -->
+
+<!--
+aggregationType = AVERAGE | SUM | OBSERVATION
+timeRollUpType = AVERAGE | SUM | CURRENT
+clusterRollUpType = INDIVIDUAL | COLLECTIVE
+-->
+<!--
+Set delta = true for metric to report per-min data
+-->
+<stats>
+    <stat name="Resource Utilization">
+        <metric attr="% Connections Used" alias="% Connections Used" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Total Active Threads" alias="Total Active Threads" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Total Cached Threads" alias="Total Cached Threads" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Total Connected Threads" alias="Total Connected Threads" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Open Tables" alias="Open Tables" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="% Key Cache Used" alias="% Key Cache Used" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="% Query Cache Used" alias="% Query Cache Used" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="% InnoDB Buffer Pool Used" alias="% InnoDB Buffer Pool Used" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Log File % of InnoDB Buffer Pool" alias="Log File % of InnoDB Buffer Pool" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Opened Files" alias="Opened Files" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Slow Queries" alias="Slow Queries" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Max Used Connections" alias="Max Used Connections" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Aborted Connections" alias="Aborted Connections" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Aborted Clients" alias="Aborted Clients" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+    </stat>
+    <stat name="Activity">
+        <metric attr="Connections|Total Attempts" alias="Connections|Total Attempts" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Connections|Total Failed+Aborted" alias="Connections|Total Failed+Aborted" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Transactions|Total" alias="Transactions|Total" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Bytes between Client-Server|Sent" alias="Bytes between Client-Server|Sent" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Bytes between Client-Server|Received" alias="Bytes between Client-Server|Received" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="InnoDB|Bytes Read" alias="InnoDB|Bytes Read" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="InnoDB|Bytes Written" alias="InnoDB|Bytes Written" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="InnoDB|File Synchronization" alias="InnoDB|File Synchronization" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Tables|Opened" alias="Tables|Opened" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Tables|Temp Created" alias="Tables|Temp Created" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Transactions|Rolled Back" alias="Transactions|Rolled Back" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Transactions|Committed" alias="Transactions|Committed" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|Total Requests" alias="Operations|Total Requests" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|Total Inserts" alias="Operations|Total Inserts" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|Total Queries" alias="Operations|Total Queries" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|Total Deletes" alias="Operations|Total Deletes" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|Total Updates" alias="Operations|Total Updates" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|InnoDB|Total Rows Queried" alias="Operations|InnoDB|Total Rows Queried" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|InnoDB|Total Rows Deleted" alias="Operations|InnoDB|Total Rows Deleted" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|InnoDB|Total Rows Updated" alias="Operations|InnoDB|Total Rows Updated" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Operations|InnoDB|Total Rows Inserted" alias="Total Rows Inserted" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="Sort Total" alias="Sort Total" aggregationType = "SUM" timeRollUpType = "SUM" clusterRollUpType = "COLLECTIVE"/>
+    </stat>
+    <stat name="Efficiency">
+        <metric attr="Index|Single Table" alias="Index|Single Table" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Index|Joins" alias="Index|Joins" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Sort|Spill to Disk" alias="Sort|Spill to Disk" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Query|Slow" alias="Query|Slow" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Cache|Key Cache|Read Hits" alias="Cache|Key Cache|Read Hits" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Cache|Key Cache|Write Hits" alias="Cache|Key Cache|Write Hits" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Cache|Query Cache|Hits" alias="Cache|Query Cache|Hits" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="InnoDB|Cache|Buffer Pool|Hits" alias="InnoDB|Cache|Buffer Pool|Hits" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Cache|Threads|Hits" alias="Cache|Threads|Hits" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Table Locks|Waited" alias="Table Locks|Waited" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="InnoDB|Row Locks|Waiting" alias="InnoDB|Row Locks|Waiting" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="InnoDB|Row Locks|Row Lock Time" alias="InnoDB|Row Locks|Row Lock Time" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "COLLECTIVE"/>
+        <metric attr="InnoDB|Row Locks|Avg Time Waited" alias="InnoDB|Row Locks|Avg Time Waited" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Binary Log|% Transactions too Big" alias="Binary Log|% Transactions too Big" aggregationType = "OBSERVATION" timeRollUpType = "CURRENT" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="Tables|Temp|% Created on Disk" alias="Tables|Temp|% Created on Disk" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="InnoDB|Cache|Buffer Pool|% Writes Waited" alias="InnoDB|Cache|Buffer Pool|% Writes Waited" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+    </stat>
+    <!-- Metrics Reported like Replication|<SlaveName>|<MetricName> -->
+    <stat name="Replication">
+        <metric attr="Slave IO Running" alias="Slave IO Running" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+        <metric attr="SQL Delay" alias="SQL Delay" aggregationType = "AVERAGE" timeRollUpType = "AVERAGE" clusterRollUpType = "INDIVIDUAL"/>
+    </stat>
+</stats>

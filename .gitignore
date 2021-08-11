@@ -2,7 +2,7 @@
 *.iml
 .classpath
 .project
-.idea
+.idea/
 dist
 target
 
@@ -10,4 +10,3 @@ target
 *.war
 *.ear
 /bin
-
