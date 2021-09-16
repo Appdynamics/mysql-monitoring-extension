@@ -11,8 +11,8 @@ This extension monitors the MySQL server. This extension should be used with sta
 
 ## Installation
 
-1. Run "mvn clean install"
-2. Unzip the contents of MySQLMonitor-\<version\>.zip file (&lt;MySQLRepo&gt; / targets) and copy the directory to `<your-machine-agent-dir>/monitors`.
+1. Run "mvn clean install" from "MySqlMonitorRepo"
+2. Unzip the contents of MySqlMonitor-\<version\>.zip file (&lt;MySQLRepo&gt; / targets) and copy the directory to `<your-machine-agent-dir>/monitors`.
 3. Edit config.yml file and provide the required configuration (see Configuration section)
 4. Restart the Machine Agent.
 
@@ -21,7 +21,7 @@ Please place the extension in the **"monitors"** directory of your **Machine Age
 ## Configuration
 
 ### Config.yml
-Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml validator http://yamllint.com/
+Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a [yaml validator](https://jsonformatter.org/yaml-validator)
 
 #### Configure metric prefix
 Please follow section 2.1 of the [Document](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695) to set up metric prefix.
@@ -73,7 +73,7 @@ encryptionKey: "welcome"
 Always include 1 thread per server + 1 to run main task.
 
 #### Yml Validation
-Please copy all the contents of the config.yml file and go to http://www.yamllint.com/ . On reaching the website, paste the contents and press the “Go” button on the bottom left.
+Please copy all the contents of the config.yml file and go [here](https://jsonformatter.org/yaml-validator). On reaching the website, paste the contents and press the “Validate YAML” button.
 
 #### monitor.xml
 Configure the path to the config.yml and metrics.xml file by editing the <task-arguments> in the monitor.xml file in the `<MACHINE_AGENT_HOME>/monitors/MySQLMonitor/` directory.
@@ -187,8 +187,8 @@ Always feel free to fork and contribute any changes directly via [GitHub](https:
 |          Name            |  Version   |
 |--------------------------|------------|
 |Extension Version         |2.1.0       |
-|Controller Compatibility  |4.5 or Later|
-|Machine Agent Version     |4.5.13+     |
 |Product Tested On         |8.0.25      |
 |Last Update               |10/08/2021  |
-
+|Change List|[ChangeLog](https://github.com/Appdynamics/mysql-monitoring-extension/blob/master/CHANGELOG.md)|
+   
+**Note**: While extensions are maintained and supported by customers under the open-source licensing model, they interact with agents and Controllers that are subject to [AppDynamics’ maintenance and support policy](https://docs.appdynamics.com/latest/en/product-and-release-announcements/maintenance-support-for-software-versions). Some extensions have been tested with AppDynamics 4.5.13+ artifacts, but you are strongly recommended against using versions that are no longer supported.   
