@@ -187,6 +187,10 @@ public class MySQLMonitorTask implements AMonitorTaskRunnable {
                         value = rs.getString("SQL_Delay");
                         slaveMetricMap.put("Replication" + SEPARATOR + name + SEPARATOR + "SQL Delay", value);
                         logger.debug("[key,value] = [SQL Delay," + value + "]");
+
+                        value = rs.getString("Seconds_Behind_Master");
+                        slaveMetricMap.put("Replication" + SEPARATOR + name + SEPARATOR + "Seconds Behind Master",value);
+                        logger.debug("[key,value] = [Seconds Behind Master," + value + "]");
                     }
                 } catch (Exception ex) {
                     logger.error("Error while executing query [" + query + "] on slave [ " + name + "]", ex);

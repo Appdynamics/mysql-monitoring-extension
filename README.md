@@ -170,6 +170,7 @@ Replication stats will be available when "slave"'s are configured in the config.
 |------------------------------	      |
 |Slave IO Running|
 |SQL Delay|
+|Seconds Behind Master|
 
 ## Extensions Workbench
 Workbench is an inbuilt feature provided with each extension in order to assist you to fine tune the extension setup before you actually deploy it on the controller. Please review the following document on [How to use the Extensions WorkBench](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-use-the-Extensions-WorkBench/ta-p/30130).

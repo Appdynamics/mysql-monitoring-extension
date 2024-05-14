@@ -26,6 +26,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.appdynamics</groupId>
             <artifactId>machineagent-repackaged</artifactId>
             <version>4.0.5.1</version>
